@@ -1,15 +1,28 @@
-\c KRISTINTAKEHARA;
+-- \c KRISTINTAKEHARA;
+-- DROP DATABASE indexed_cars;
 
--- 1. Create a new postgres user named `indexed_cars_user`
+-- -- 1. Create a new postgres user named `indexed_cars_user`
 
--- CREATE USER indexed_cars_user;
+-- -- CREATE USER indexed_cars_user;
 
--- 1. Create a new database named `indexed_cars` owned by `indexed_cars_user`
+-- -- 1. Create a new database named `indexed_cars` owned by `indexed_cars_user`
 
 -- CREATE DATABASE indexed_cars
 -- OWNER indexed_cars_user;
 
-\c indexed_cars;
+-- \c indexed_cars;
+-- \i scripts/car_models.sql;
+
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
 
 -- 1. Run the provided `scripts/car_models.sql` script on the `indexed_cars` database
 
@@ -76,7 +89,7 @@ WHERE year = 2010;
 
 -- Create a query to get a list of all make_title values from the car_models table where the make_code is 'LAM', without any duplicate rows, and note the time somewhere. (should have 1 result)
 
-CREATE INDEX ON car_models (make_code);
+-- CREATE INDEX ON car_models (make_code);
 -- time: 913.882 ms
 
 SELECT make_title
@@ -138,9 +151,15 @@ WHERE year = 2010;
 -- Indexing on table create
 -- Add your recorded indexing statements to the scripts/car_models.sql
 
+-- DONE
+
 -- Delete the car_models table
 
-DROP TABLE car_models;
+-- DONE
+
+-- DROP TABLE car_models;
+
+-- DONE
 
 -- Run the provided scripts/car_models.sql script on the indexed_cars database
 
