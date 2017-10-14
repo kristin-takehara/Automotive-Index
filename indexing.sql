@@ -1,0 +1,171 @@
+-- \c KRISTINTAKEHARA;
+-- DROP DATABASE indexed_cars;
+
+-- -- 1. Create a new postgres user named `indexed_cars_user`
+
+-- -- CREATE USER indexed_cars_user;
+
+-- -- 1. Create a new database named `indexed_cars` owned by `indexed_cars_user`
+
+-- CREATE DATABASE indexed_cars
+-- OWNER indexed_cars_user;
+
+-- \c indexed_cars;
+-- \i scripts/car_models.sql;
+
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+-- \i scripts/car_model_data.sql;
+
+-- 1. Run the provided `scripts/car_models.sql` script on the `indexed_cars` database
+
+-- DONE
+
+-- 1. Run the provided `scripts/car_model_data.sql` script on the `indexed_cars` database **10 times**
+-- DONE
+--    _there should be **223380** rows in `car_models`_
+
+
+-- Timing Select Statements:
+-- Enable timing queries in Postgres by toggling the \timing command in the psql shell.
+
+-- DONE
+
+-- Run a query to get a list of all make_title values from the car_models table where the make_code is 'LAM', without any duplicate rows, and note the time somewhere. (should have 1 result)
+
+SELECT (model_title)
+FROM car_models
+WHERE make_code = 'LAM';
+-- time: 17.527 ms
+
+-- Run a query to list all model_title values where the make_code is 'NISSAN', and the model_code is 'GT-R' without any duplicate rows, and note the time somewhere. (should have 1 result)
+
+SELECT (model_title)
+FROM car_models
+WHERE make_code = 'NISSAN'
+AND model_code = 'GT-R';
+-- time: 0.180 ms
+
+-- Run a query to list all make_code, model_code, model_title, and year from car_models where the make_code is 'LAM', and note the time somewhere. (should have 1360 rows)
+
+SELECT (make_code, model_code, model_title, year)
+FROM car_models
+WHERE make_code = 'LAM';
+-- time: 0.149 ms
+
+-- Run a query to list all fields from all car_models in years between 2010 and 2015, and note the time somewhere (should have 78840 rows)
+
+SELECT (id, make_code, make_title, model_code, model_title, year)
+FROM car_models
+WHERE year BETWEEN 2010 AND 2015;
+-- time: 235.343 ms
+
+-- Run a query to list all fields from all car_models in the year of 2010, and note the time somewhere (should have 13140 rows)
+
+SELECT (id, make_code, make_title, model_code, model_title, year)
+FROM car_models
+WHERE year = 2010;
+-- time: 60.640 ms
+
+-- Indexing
+-- Given the current query requirements, "should get all make_titles", "should get a list of all model_titles by the make_code", etc.
+
+-- Create indexes on the columns that would improve query performance.
+
+-- To add an index:
+-- CREATE INDEX [index name]
+--   ON [table name] ([column name(s) index]);
+-- Record your index statements in indexing.sql
+
+
+-- Write the following statements in indexing.sql
+
+-- Create a query to get a list of all make_title values from the car_models table where the make_code is 'LAM', without any duplicate rows, and note the time somewhere. (should have 1 result)
+
+-- CREATE INDEX ON car_models (make_code);
+-- time: 913.882 ms
+
+SELECT make_title
+FROM car_models
+WHERE make_code = 'LAM';
+-- time: 32.214 ms
+
+-- Create a query to list all model_title values where the make_code is 'NISSAN', and the model_code is 'GT-R' without any duplicate rows, and note the time somewhere. (should have 1 result)
+
+SELECT model_title
+FROM car_models
+WHERE make_code = 'NISSAN'
+AND make_code = 'GT-R';
+-- time: 0.567 ms
+
+-- Create a query to list all make_code, model_code, model_title, and year from car_models where the make_code is 'LAM', and note the time somewhere. (should have 1360 rows)
+
+SELECT (make_code, model_code, model_title, year)
+FROM car_models
+WHERE make_code = 'LAM';
+-- time: 3.315 ms
+
+-- Create a query to list all fields from all car_models in years between 2010 and 2015, and note the time somewhere (should have 78840 rows)
+
+SELECT (id, make_code, make_title, model_code, model_title, year)
+FROM car_models
+WHERE year BETWEEN 2010 AND 2015;
+-- time: 165.317 ms
+
+-- Create a query to list all fields from all car_models in the year of 2010, and note the time somewhere (should have 13140 rows)
+
+SELECT (id, make_code, make_title, model_code, model_title, year)
+FROM car_models
+WHERE year = 2010;
+-- time: 58.208 ms
+
+-- Compare the times of the queries before and after the table has been indexes.
+
+-- BEFORE:
+-- Time: 4.193 ms
+-- Time: 16.730 ms
+-- Time: 3.707 ms
+-- Time: 170.159 ms
+-- Time: 63.703 ms
+
+-- AFTER: (CREATE INDEX Time: 730.009 ms)
+-- Time: 2.191 ms
+-- Time: 0.634 ms
+-- Time: 3.069 ms
+-- Time: 161.894 ms
+-- Time: 58.208 ms
+----------------------------
+
+-- Why are queries #4 and #5 not running faster?
+
+-- Despite being indexed, the computer must still index through the entire table (and its data) then isolate the 'years' to return the query request.
+----------------------------
+
+-- Indexing on table create
+-- Add your recorded indexing statements to the scripts/car_models.sql
+
+-- DONE
+
+-- Delete the car_models table
+
+-- DONE
+
+-- DROP TABLE car_models;
+
+-- DONE
+
+-- Run the provided scripts/car_models.sql script on the indexed_cars database
+
+-- DONE
+
+-- Run the provided scripts/car_model_data.sql script on the indexed_cars database 10 times
+-- there should be 223380 rows in car_models
+
+-- ALL PAU :)
